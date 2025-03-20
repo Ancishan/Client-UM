@@ -1,16 +1,34 @@
 import React from 'react';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, MenuProps, theme } from 'antd';
+import { Outlet } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-  (icon, index) => ({
-    key: String(index + 1),
-    icon: React.createElement(icon),
-    label: `nav ${index + 1}`,
-  }),
-);
+const items: MenuProps['items'] = [
+  {
+    key: "1",
+    label: "Dashboard"
+  },
+  {
+    key: "2",
+    label:"Profile"
+  },
+  {
+    key: "3",
+    label: "user management",
+    children:[
+      {
+        key: "11",
+        label:"Create Amin",
+      },
+      {
+        key: "22",
+        label: "Create Student"
+      }
+    ]
+  }
+]
 
 const MainLayOut: React.FC = () => {
   const {
@@ -18,7 +36,7 @@ const MainLayOut: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout>
+    <Layout style={{height: '100vh'}}>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
@@ -29,11 +47,15 @@ const MainLayOut: React.FC = () => {
           console.log(collapsed, type);
         }}
       >
+        <div style={{color: 'white', height:'3rem', display: 'flex', justifyContent:'center', alignItems:'center'}}>
+          <h1>Ph-University</h1>
+        </div>
         <div className="demo-logo-vertical" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        <h2></h2>
+        <Header style={{ padding: 0, background:  "black" }} />
         <Content style={{ margin: '24px 16px 0' }}>
           <div
             style={{
@@ -43,7 +65,7 @@ const MainLayOut: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            content
+           <Outlet></Outlet>
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
@@ -54,4 +76,4 @@ const MainLayOut: React.FC = () => {
   );
 };
 
-export default MainLayOut ;
+export default MainLayOut;
